@@ -16,12 +16,9 @@ video_capture = cv2.VideoCapture(0)
 knn_clf=None
 model_path="trained_model.clf"
 if knn_clf is None:
-    print(knn_clf)
-    print("antes del open")
     with open(model_path, 'rb') as f:
         knn_clf = pickle.load(f)
-        print("despues del open")
-        print(knn_clf)
+        
 
 
 # Initialize some variables

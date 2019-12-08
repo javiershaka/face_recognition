@@ -35,9 +35,9 @@ known_face_names = [
     "jose_luis_avila",
     "German"
 ]
-for image_file in os.listdir("knn_examples/test"):
+for image_file in os.listdir("predictions"):
 
-    full_file_path = os.path.join("knn_examples/test", image_file)
+    full_file_path = os.path.join("predictions", image_file)
     # Load an image with an unknown face
     unknown_image = face_recognition.load_image_file(full_file_path)
 
@@ -69,7 +69,7 @@ for image_file in os.listdir("knn_examples/test"):
         if matches[best_match_index]:
             name = known_face_names[best_match_index]
       
-        dirName = 'trainingdata/'+name
+        dirName = 'knn/trainingdata/'+name
         if not os.path.exists(dirName):
 
             os.makedirs(dirName)
@@ -88,7 +88,7 @@ for image_file in os.listdir("knn_examples/test"):
         face_image = unknown_image[top:bottom, left:right]
         pil_imagerectangle = Image.fromarray(face_image)
         pil_imagerectangle.show()
-        pil_imagerectangle.save(f"trainingdata/{name}/{name}{top}.jpg")
+        pil_imagerectangle.save(f"knn/trainingdata/{name}/{name}{top}.jpg")
 
 # Remove the drawing library from memory as per the Pillow docs
     del draw

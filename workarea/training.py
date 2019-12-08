@@ -106,7 +106,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree
 
     return knn_clf
 print("Training KNN classifier...")
-train("knn_examples/train", model_save_path="trained_model.clf", n_neighbors=2)
+train("knn/trainingdata", model_save_path="trained_model.clf", n_neighbors=2)
 print("Training complete!")
 
 

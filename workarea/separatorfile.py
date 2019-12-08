@@ -67,7 +67,7 @@ for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodi
     if matches[best_match_index]:
         name = known_face_names[best_match_index]
       
-    dirName = 'trainingdata/'+name
+    dirName = 'knn/trainingdata/'+name
     if not os.path.exists(dirName):
         os.makedirs(dirName)
         print("Directory " , dirName ,  " Created ")
@@ -85,7 +85,7 @@ for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodi
     face_image = unknown_image[top:bottom, left:right]
     pil_imagerectangle = Image.fromarray(face_image)
     pil_imagerectangle.show()
-    pil_imagerectangle.save(f"trainingdata/{name}/{name}{top}.jpg")
+    pil_imagerectangle.save(f"knn/trainingdata/{name}/{name}{top}.jpg")
 
 # Remove the drawing library from memory as per the Pillow docs
 del draw

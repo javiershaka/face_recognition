@@ -120,9 +120,12 @@ def show_prediction_labels_on_image(img_path, predictions):
 
 # STEP 2: Using the trained classifier, make predictions for unknown images
 for image_file in os.listdir("knn_examples/test"):
+    print(os.listdir("knn_examples/test"))
+    print("image_file")
+    print(image_file)
     full_file_path = os.path.join("knn_examples/test", image_file)
-
-    print("Looking for faces in {}".format(image_file))
+    print(full_file_path)
+    #print("Looking for faces in {}".format(image_file))
 
     # Find all people in the image using a trained classifier model
     # Note: You can pass in either a classifier file name or a classifier model instance
@@ -133,5 +136,5 @@ for image_file in os.listdir("knn_examples/test"):
         print("- Found {} at ({}, {})".format(name, left, top))
 
     # Display results overlaid on an image
-    show_prediction_labels_on_image(os.path.join("knn_examples/test", image_file), predictions)
-
+    #show_prediction_labels_on_image(os.path.join("knn_examples/test", image_file), predictions)
+    show_prediction_labels_on_image(full_file_path, predictions)

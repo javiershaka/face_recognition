@@ -1,7 +1,7 @@
 import face_recognition
 import cv2
 import numpy as np
-
+import pickle
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
 #   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
@@ -13,36 +13,16 @@ import numpy as np
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
+knn_clf=None
+model_path="trained_model.clf"
+if knn_clf is None:
+    print(knn_clf)
+    print("antes del open")
+    with open(model_path, 'rb') as f:
+        knn_clf = pickle.load(f)
+        print("despues del open")
+        print(knn_clf)
 
-# Load a sample picture and learn how to recognize it.
-javiershaka_image = face_recognition.load_image_file("javiershaka.jpg")
-javiershaka_face_encoding = face_recognition.face_encodings(javiershaka_image)[0]
-
-# Load a second sample picture and learn how to recognize it.
-herlinda_image = face_recognition.load_image_file("herlinda.jpg")
-herlinda_face_encoding = face_recognition.face_encodings(herlinda_image)[0]
-
-# Load a second sample picture and learn how to recognize it.
-joseluis_image = face_recognition.load_image_file("joseluis.jpeg")
-joseluis_face_encoding = face_recognition.face_encodings(joseluis_image)[0]
-
-# Load a second sample picture and learn how to recognize it.
-german_image = face_recognition.load_image_file("german.jpg")
-german_face_encoding = face_recognition.face_encodings(german_image)[0]
-
-# Create arrays of known face encodings and their names
-known_face_encodings = [
-    javiershaka_face_encoding,
-    herlinda_face_encoding,
-    joseluis_face_encoding,
-    german_face_encoding
-]
-known_face_names = [
-    "javiershaka",
-    "herlinda Madueno",
-    "jose luis avila",
-    "German"
-]
 
 # Initialize some variables
 face_locations = []
@@ -108,24 +88,14 @@ while True:
         # Find all the faces and face encodings in the current frame of video
         face_locations = face_recognition.face_locations(rgb_small_frame)
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
-
+      
+        
         face_names = []
-        for face_encoding in face_encodings:
-            # See if the face is a match for the known face(s)
-            matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
-            name = "Unknown"
+        for face_encoding in face_encodings:    
+            #  i not that idea with function this part with knn_clf but function by javiershaka
+            name = str(knn_clf.predict(face_encodings)).replace("'", "").replace("[", "").replace("]", "")
 
-            # # If a match was found in known_face_encodings, just use the first one.
-            # if True in matches:
-            #     first_match_index = matches.index(True)
-            #     name = known_face_names[first_match_index]
-
-            # Or instead, use the known face with the smallest distance to the new face
-            face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
-            best_match_index = np.argmin(face_distances)
-            if matches[best_match_index]:
-                name = known_face_names[best_match_index]
-
+            
             face_names.append(name)
 
     process_this_frame = not process_this_frame

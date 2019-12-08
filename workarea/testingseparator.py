@@ -80,7 +80,12 @@ for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodi
     text_width, text_height = draw.textsize(name)
     draw.rectangle(((left, bottom - text_height - 10), (right, bottom)), fill=(0, 0, 255), outline=(0, 0, 255))
     draw.text((left + 6, bottom - text_height - 5), name, fill=(255, 255, 255, 255))
-
+    
+    
+    face_image = unknown_image[top:bottom, left:right]
+    pil_imagerectangle = Image.fromarray(face_image)
+    pil_imagerectangle.show()
+    pil_imagerectangle.save(f"trainingdata/{name}/{name}{top}.jpg")
 
 # Remove the drawing library from memory as per the Pillow docs
 del draw
